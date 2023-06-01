@@ -23,7 +23,7 @@ connection.once('open', async () => {
   // Loop 20 times -- add students to the students array
   for (let i = 0; i < 20; i++) {
     // Get some random assignment objects using a helper function that we imported from ./data
-    const thoughtsText = getRandomThoughts();
+    const thoughtText = getRandomThoughts();
     // let thoughtInfo = thoughts;
    // let thoughtScore = thoughts.score;
 
@@ -42,14 +42,13 @@ connection.once('open', async () => {
    
     console.log(username);
     users.push({
-      first,
-      last,
       username,
       email,
-      thoughtsText
+      thoughtText,
+      
     });
 
-    thoughts.push({thoughtsText})
+    thoughts.push({thoughtText})
 
 
   }

@@ -83,7 +83,7 @@ const names = [
     'Monopoly Money Manager',
     'Movie trailers',
     'Hello world',
-    'Stupid Social Media App',
+    'Cool Social Media App!',
     'Notes',
     'Messages',
     'Email',
