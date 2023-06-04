@@ -16,6 +16,9 @@ connection.once('open', async () => {
   // Drop existing Thoughts
   await Thought.deleteMany({});
 
+  // Drop existing Reactions
+  // await Reaction.deleteMany({});
+
   // Create empty array to hold the students
   const users = [];
   const thoughts = [];

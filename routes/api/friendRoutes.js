@@ -7,7 +7,8 @@ const {
 
 
 // /api/users/:userId/friends/:friendId
-router.route('/:userId/friends/:friendId').put(addFriend).delete(deleteFriend);
+router.route('/:userId/friends/:friendId').delete(deleteFriend);
+// router.route('/:userId/friends/:friendId').put(addFriend).delete(deleteFriend);
 
 // /api/students/:studentId/assignments
 // router.route('/:userId/thoughts').post(addUser);

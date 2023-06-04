@@ -66,70 +66,55 @@ module.exports = {
           res.status(500).json(err);
         });
     },
-  
-    // // Add an assignment to a user
-    // addAssignment(req, res) {
-    //   console.log('You are adding an assignment');
-    //   console.log(req.body);
-    //   Student.findOneAndUpdate(
-    //     { _id: req.params.studentId },
-    //     { $addToSet: { assignments: req.body } },
-    //     { runValidators: true, new: true }
-    //   )
-    //     .then((student) =>
-    //       !student
-    //         ? res
-    //             .status(404)
-    //             .json({ message: 'No student found with that ID :(' })
-    //         : res.json(student)
-    //     )
-    //     .catch((err) => res.status(500).json(err));
-    // },
-    // // Remove assignment from a student
-    // removeAssignment(req, res) {
-    //   Student.findOneAndUpdate(
-    //     { _id: req.params.studentId },
-    //     { $pull: { assignment: { assignmentId: req.params.assignmentId } } },
-    //     { runValidators: true, new: true }
-    //   )
-    //     .then((student) =>
-    //       !student
-    //         ? res
-    //             .status(404)
-    //             .json({ message: 'No student found with that ID :(' })
-    //         : res.json(student)
-    //     )
-    //     .catch((err) => res.status(500).json(err));
-    // },
 
-    // Update a user
-  updateUser(req, res) {
 
-    console.log(req.body)
-
+     // Remove assignment from a student
+  deleteFriend(req, res) {
+    console.log('userid:',req.params.userId);
+    console.log('friendId:', req.params.friendId);
+    console.log(req.params)
     User.findOneAndUpdate(
-
       { _id: req.params.userId },
-      { 
-        $set: req.body,
-        thoughtText: req.thoughtText 
-      },
-
+      { $pull: { friends: { friendId: req.params.friendId } } },
       { runValidators: true, new: true }
+    )
+      .then((user) =>
+        !user
+          ? res
+              .status(404)
+              .json({ message: 'No User found with that friend ID :(' })
+          : res.json(student)
+      )
+      .catch((err) => res.status(500).json(err));
+  },
+  
+    
+
+  updateUser(req, res) {
+    console.log('body',req.body)
+    User.findOneAndUpdate(
+      { _id: req.params.userId },
+      { $set: req.body },
+      { runValidators: true, new: true }
+      
     )
       .then((user) =>
         !user
           ? res.status(404).json({ message: 'No user with this id!' })
           : res.json(user)
       )
-      .catch((err) => res.status(500).json(err));
+      .catch((err) => {
+        console.log(err);
+        res.status(500).json(err);
+      });
   },
+
 
   addFriend(req, res) {
     User.findOneAndUpdate(
       { _id: req.params.userId },
-    //   { $addToSet: { friends: req.body } },
-      { $set: req.body },
+      { $addToSet: { friends: req.body } },
+      // { $set: req.body },
       { runValidators: true, new: true }
     )
       .then((user) =>
@@ -143,6 +128,41 @@ module.exports = {
       });
   },
 
+
+  // getAllReactions(req, res) {
+  //   Reaction.find()
+  //     .then(async (reaction) => {
+  //       const reactionObj = {
+  //         reaction,
+  //         // headCount: await headCount(),
+  //       };
+  //       return res.json(reactionObj);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //       return res.status(500).json(err);
+  //     });
+  // },
+
+  // // create a new reaction
+  // createReaction(req, res) {
+  //   // console.log("Reaction body",req.body);
+  //   Reaction.create(req.body)
+  //      .then((reaction) => res.json(reaction))
+  //      .catch((err) => res.status(500).json(err));
+  //  },
+
+  //  // Delete a reaction
+  //  deleteReaction(req, res) {
+  //    Reaction.findOneAndRemove({ _id: req.params.reactionId })
+  //      .then((reaction) => res.json(reaction))
+  //      //   !user
+  //      //     ? res.status(404).json({ message: 'No such user exists' })
+  //      .catch((err) => {
+  //        console.log(err);
+  //        res.status(500).json(err);
+  //      });
+  //  },
 
   };
   
