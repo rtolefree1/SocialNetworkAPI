@@ -23,13 +23,14 @@ module.exports = {
     getSingleUser(req, res) {
       User.findOne({ _id: req.params.userId })
         .select('-__v')
+       // .populate('thoughts')
+      /** .populate('reactions')*/
         .then(async (user) =>
+        //.then(async (user) =>
           !user
+          // use populate
             ? res.status(404).json({ message: 'No user with that ID' })
-            : res.json({
-                user,
-                //grade: await grade(req.params.studentId),
-              })
+            : res.json(user)
         )
         .catch((err) => {
           console.log(err);
@@ -69,25 +70,58 @@ module.exports = {
 
 
      // Remove assignment from a student
-  deleteFriend(req, res) {
-    console.log('userid:',req.params.userId);
-    console.log('friendId:', req.params.friendId);
-    console.log(req.params)
-    User.findOneAndUpdate(
-      { _id: req.params.userId },
-      { $pull: { friends: { friendId: req.params.friendId } } },
-      { runValidators: true, new: true }
-    )
-      .then((user) =>
-        !user
-          ? res
-              .status(404)
-              .json({ message: 'No User found with that friend ID :(' })
-          : res.json(student)
-      )
-      .catch((err) => res.status(500).json(err));
-  },
+  // deleteFriend(req, res) {
+  //   console.log('userid:',req.params.userId);
+  //   console.log('friendId:', req.params.friendId);
+  //   console.log(req.params)
+  //   User.findOneAndUpdate(
+  //     { _id: req.params.userId },
+  //     { $pull: { friends: { friendId: req.params.friendId } } },
+  //     { runValidators: true, new: true }
+  //   )
+  //     .then((user) =>
+  //       !user
+  //         ? res
+  //             .status(404)
+  //             .json({ message: 'No User found with that friend ID :(' })
+  //         : res.json(student)
+  //     )
+  //     .catch((err) => res.status(500).json(err));
+  // },
   
+
+  deleteFriend(req, res) {
+    // User.findOneAndRemove({ _id: req.params.userId })
+    User.findOneAndUpdate({ _id: req.params.userId },
+      { $pull: { friends: req.params.friendId } }, )
+      .then((user) =>{
+        console.log('user1',user)
+        console.log('req user id',req.params.userId )
+        
+        console.log('req friend Id', req.params.friendId)
+        //console.log('id', _id)
+        !user
+          ? res.status(404).json({ message: 'No such user id exists' })
+          // : User.findOneAndUpdate(
+          //   // : User.findOneAndRemove(
+          //      { _id: req.params.userId },
+          //   //   { $pull: { friends: req.params.friends} },
+          //   { $pull: { friends: req.params.friendId } },
+          //     { new: true }
+          //   )
+          // })
+      // .then((friend) =>{console.log('friend',friend)
+      //   !friend
+      //     ? res.status(404).json({
+      //         message: 'Friend not deleted',
+      //       })
+          : res.json({ message: 'Friend successfully deleted' })
+          })
+      .catch((err) => {
+        console.log(err);
+        res.status(500).json(err);
+      });
+  },
     
 
   updateUser(req, res) {

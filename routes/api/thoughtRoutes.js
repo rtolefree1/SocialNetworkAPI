@@ -11,7 +11,7 @@ const {
 
 } = require('../../controllers/thoughtController');
 
-// /api/thoughts
+// /api/thoughts; create
 router.route('/').get(getAllThoughts).post(createThought);
 
 // /api/thoughts/
@@ -21,7 +21,7 @@ router.route('/').get(getAllThoughts).post(createThought);
 // router.route('/:thoughtId/assignments/:assignmentId').delete(removeThought);
 
 // /api/thoughts/:thoughtId/reaction
-router.route('/:thoughtId/reaction').put(createReaction);
+router.route('/:thoughtId/reaction').post(createReaction);
 
 // /api/thoughts/:thoughtId/reaction
 router.route('/update/:thoughtId/').post(updateThought);

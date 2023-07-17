@@ -29,14 +29,24 @@ const thoughtSchema = new Schema({
             ref: 'Reaction'
         },
     ],
-})
+    
+},
+{
+    toJSON: 
+    {
+      virtuals: true,
+    },
+      id: false
+    },
+
+)
 
 // Create a virtual property `userCount` that gets the length of user's friends
 thoughtSchema.virtual('reactionCount').get(function () {
-    return this.reactions.length;
+    return this.reactionBody.length;
   });
   
   // Initialize our Thought model
-  const Thought = model('thoughts', thoughtSchema);
+  const Thought = model('thought', thoughtSchema);
   
   module.exports = Thought;
